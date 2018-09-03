@@ -6,14 +6,13 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      counterItems : [],
-      count : 0
+      counterItems : []
     }
   }
 
   addItems = () => {
     const { counterItems } = this.state;
-    counterItems.push(0);
+    counterItems.push(Math.random());
     this.setState({
       counterItems
     })
@@ -26,49 +25,24 @@ class App extends Component {
       counterItems
     })
   }
-  onClickPlus = () => {
-    const { count } = this.state;
-    this.setState({
-        count : count+1
-    })
-}
 
-onClickMinus = () => {
-    const { count } = this.state;
-    if(count > 0){
-    this.setState({
-        count : count-1
-    })}
+  addNavCount = () => {
+    return this.state.counterItems.length;
     
-    else{
-        this.setState({
-            count : 0
-        })
-    }
-}
-displayCount = () => {
-    const { count } = this.state;
-    if( count === 0 ){
-        return <div style={{ backgroundColor : 'red'}}>Zero</div>
-    }else{
-        return <div>{count}</div>
-    }
-}
+   
+  }
+ 
   render() {
     const {counterItems} = this.state;
     return (
       <Fragment>
-        <Navbar />
+        <Navbar updateNav={this.addNavCount} />
         <button onClick={this.addItems}>Add</button>
         {counterItems.map((data,key) => {
           return(
             <div key={key}>
-              <CounterComponent 
+              <CounterComponent
                 updateParentDelete={this.deleteItems}
-                updateParentPlus={this.onClickPlus}
-                updateParentMinus={this.onClickMinus}
-                updateParentDisplay={this.displayCount} 
-
               />
             </div>
           )})
